@@ -1,0 +1,28 @@
+From cd09e6b7786b063ced3cf9ca5a6de8706cd1bb1a Mon Sep 17 00:00:00 2001
+From: Elyse0
+Date: Sun, 24 Apr 2022 20:05:33 +0000
+Subject: [PATCH] libavformat/http.c: Set an appropriate default User-Agent
+
+In some extreme cases, ffmpeg fails to set the specified UA
+and fallbacks to 'Lavf/$version'. Although this is correct, in
+yt-dlp most of the time we'd prefer a Web browser user agent.
+---
+ libavformat/http.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libavformat/http.c b/libavformat/http.c
+index c4eeb58..1ffcf7b 100644
+--- a/libavformat/http.c
++++ b/libavformat/http.c
+@@ -139,7 +139,7 @@ typedef struct HTTPContext {
+ #define OFFSET(x) offsetof(HTTPContext, x)
+ #define D AV_OPT_FLAG_DECODING_PARAM
+ #define E AV_OPT_FLAG_ENCODING_PARAM
+-#define DEFAULT_USER_AGENT "Lavf/" AV_STRINGIFY(LIBAVFORMAT_VERSION)
++#define DEFAULT_USER_AGENT "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.70 Safari/537.36"
+ 
+ static const AVOption options[] = {
+     { "seekable", "control seekability of connection", OFFSET(seekable), AV_OPT_TYPE_BOOL, { .i64 = -1 }, -1, 1, D },
+-- 
+2.34.1
+
